@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Configuration and local development
 The frontend application by default downloads the configuration from the `/api/config` endpoint during the bootstrap process.
 
-If you would like to override this configuration to use locally hosted APIs, please have a look at [config.service.ts](/UI/src/app/services/config.service.ts).
+If you would like to override this configuration to use locally hosted APIs, please have a look at [config.service.ts](/chatapp-ui/src/app/services/config.service.ts).
 
 
 ## Development server
