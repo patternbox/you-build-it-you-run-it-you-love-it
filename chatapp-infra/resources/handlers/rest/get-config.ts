@@ -7,7 +7,8 @@ import { Logger } from '@aws-lambda-powertools/logger';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 
 const { LOG_LEVEL } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
 const ssm = tracer.captureAWSClient(new AWS.SSM());

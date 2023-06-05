@@ -5,6 +5,8 @@ node_modules
 
 ./resources/coverage/*
 
+.idea
+
 # CDK asset staging directory
 .cdk.staging
 cdk.out

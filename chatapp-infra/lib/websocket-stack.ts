@@ -83,8 +83,9 @@ export class WebsocketStack extends Stack {
         nodeModules: [
           '@aws-lambda-powertools/logger', 
           '@aws-lambda-powertools/tracer',
+          '@aws-lambda-powertools/metrics',
           'aws-jwt-verify',
-          '@aws-lambda-powertools/metrics'
+          'uuid',
         ],
       },
       depsLockFilePath: join(__dirname, '../resources/', 'package-lock.json'),

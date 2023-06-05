@@ -7,8 +7,11 @@ import { Logger } from '@aws-lambda-powertools/logger';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 import { CognitoJwtVerifier } from "aws-jwt-verify";
 
-const { COGNITO_USER_POOL_ID, LOG_LEVEL } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const { COGNITO_USER_POOL_ID } = process.env;
+//const LOG_LEVEL: string = process.env.LOG_LEVEL!;
+
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
 const ssm = tracer.captureAWSClient(new AWS.SSM());
@@ -27,13 +30,14 @@ class Lambda implements LambdaInterface {
         logger.debug("Cognito clientId:" + JSON.stringify(cognitoClientIdParameter));
     
         try {
+            const cognitoClientId = cognitoClientIdParameter.Parameter.Value
             let cognitoVerifier = CognitoJwtVerifier.create({
               userPoolId: COGNITO_USER_POOL_ID!,
               tokenUse: "id",
-              clientId: cognitoClientIdParameter.Parameter.Value
+              clientId: cognitoClientId
             });
       
-            const verifiedToken = await cognitoVerifier.verify(token);
+            const verifiedToken = await cognitoVerifier.verify(token, {clientId: cognitoClientId});
             logger.debug("Token is valid. :", verifiedToken);
             return this.generateAllow(verifiedToken["cognito:username"], event.methodArn);
       

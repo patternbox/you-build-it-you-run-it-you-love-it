@@ -12,7 +12,8 @@ import { Payload } from '../../models/payload'
 import { Message } from '../../models/message';
 
 const { CONNECTIONS_TABLE_NAME, LOG_LEVEL, MESSAGES_TABLE_NAME } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const metrics = new Metrics({ namespace: 'websocket-chat'});
 const AWS = tracer.captureAWS(require('aws-sdk'));

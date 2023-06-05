@@ -10,7 +10,8 @@ import { StatusChangeEvent } from '../../models/status-change-event';
 import { Status } from '../../models/status';
 
 const { CONNECTIONS_TABLE_NAME, LOG_LEVEL, STATUS_QUEUE_URL } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const metrics = new Metrics({ namespace: 'websocket-chat' });
 const AWS = tracer.captureAWS(require('aws-sdk'));

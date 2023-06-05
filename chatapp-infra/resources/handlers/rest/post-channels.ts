@@ -9,7 +9,8 @@ import { Metrics } from '@aws-lambda-powertools/metrics';
 import { Channel } from '../../models/channel'
 
 const { CHANNELS_TABLE_NAME, LOG_LEVEL } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
 const ddb = tracer.captureAWSClient(new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10', region: process.env.AWS_REGION }));

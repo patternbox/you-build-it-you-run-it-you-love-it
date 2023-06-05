@@ -10,7 +10,8 @@ import { StatusChangeEvent } from '../../models/status-change-event';
 import { Status } from '../../models/status';
 
 const { STATUS_QUEUE_URL, LOG_LEVEL, CONNECTIONS_TABLE_NAME } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const metrics = new Metrics({ namespace: 'websocket-chat' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
@@ -49,7 +50,7 @@ class Lambda implements LambdaInterface {
                 eventDate: new Date()
             });
 
-            logger.debug("Putting status changed event in the SQS queue:", statusChangeEvent);
+            logger.debug("Putting status changed event in the SQS queue:", JSON.stringify(statusChangeEvent));
             // Put status change event to SQS queue
             let sqsResults = await SQS.sendMessage({
                 QueueUrl: STATUS_QUEUE_URL,

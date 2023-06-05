@@ -2,14 +2,14 @@
   "app": "npx ts-node --prefer-ts-exts bin/serverless-chat.ts",
   "watch": {
     "include": [
-      "**",
-      "../shared/"
+      "**"
     ],
     "exclude": [
       "README.md",
       "cdk*.json",
       "**/*.d.ts",
       "**/*.js",
+      "resources",
       "tsconfig.json",
       "package*.json",
       "yarn.lock",

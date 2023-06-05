@@ -14,7 +14,7 @@ export class TestAuthenticationStack extends Stack {
     super(scope, id, props);
 
     const autoVerifyFunction = new Function(this, 'lambda-function', {
-      runtime: Runtime.NODEJS_14_X,
+      runtime: Runtime.NODEJS_16_X,
       memorySize: 128,
       timeout: Duration.seconds(5),
       handler: 'index.handler',

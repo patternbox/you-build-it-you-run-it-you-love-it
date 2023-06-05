@@ -11,7 +11,8 @@ import { StatusChangeEvent } from '../../models/status-change-event';
 import { WebsocketBroadcaster } from '../../utils/websocket-broadcaster';
 
 const { CONNECTIONS_TABLE_NAME, LOG_LEVEL, APIGW_ENDPOINT } = process.env;
-const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
+const logger = new Logger({ serviceName: 'websocketMessagingService' });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const metrics = new Metrics({ namespace: 'websocket-chat', serviceName: 'websocketMessagingService' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
