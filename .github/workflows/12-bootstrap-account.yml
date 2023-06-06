@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 env:
-  TARGET_ACCOUNT_ID: ${{ inputs[format('{0}_ACCOUNT_ID', inputs.stage-env)] || vars[format('{0}_ACCOUNT_ID', inputs.stage-env)] }}
+  TARGET_ACCOUNT_ID: ${{ inputs[format('{0}_ACCOUNT_ID', inputs.stage-env)] || secrets[format('{0}_ACCOUNT_ID', inputs.stage-env)] }}
 
 jobs:
   setup-github-deployer:

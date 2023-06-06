@@ -8,7 +8,7 @@ permissions:
   contents: read
 
 env:
-  TARGET_ACCOUNT_ID: ${{ vars.DEVELOP_ACCOUNT_ID }}
+  TARGET_ACCOUNT_ID: ${{ inputs.DEVELOP_ACCOUNT_ID || secrets.DEVELOP_ACCOUNT_ID }}
 
 jobs:
   validate-cfn-templates:
