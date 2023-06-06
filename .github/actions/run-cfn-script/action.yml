@@ -14,7 +14,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout and login to AWS
-      uses: ./.github/actions/checkout-with-assume@main
+      uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-assume@main
 
     - name: Run script
       shell: bash
