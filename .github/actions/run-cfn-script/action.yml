@@ -1,0 +1,22 @@
+name: 'Run Cloudformation Script'
+description: 'checkout code, login to AWS and run cfn script'
+
+inputs:
+  script-file:
+    description: 'the bash script file to run'
+    required: true
+  aws-region:
+    description: 'the AWS region'
+    required: false
+    default: 'eu-central-1'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout and login to AWS
+      uses: patternbox/aws-cicd-pipeline/.github/actions/checkout-with-assume@main
+
+    - name: Run script
+      shell: bash
+      run: |
+        ${{ inputs.script-file }}

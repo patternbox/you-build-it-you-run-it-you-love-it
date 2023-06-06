@@ -1,0 +1,19 @@
+name: 'checkout-with-dotenv'
+description: 'Checkout and apply dot-env file'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Load environment variables
+      shell: bash
+      run: |
+        while read -r line || [ -n "$line" ]
+        do
+          if [ -n "$line" ] && [[ "$line" != \#* ]] ; then
+            echo "loading env variable: $line"
+            echo "$line" >> $GITHUB_ENV
+          fi
+        done < "./.env"
