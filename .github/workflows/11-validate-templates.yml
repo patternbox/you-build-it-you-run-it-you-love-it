@@ -1,0 +1,20 @@
+name: "11 --- [ Validate CFN templates ]"
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  TARGET_ACCOUNT_ID: ${{ vars.DEVELOP_ACCOUNT_ID }}
+
+jobs:
+  validate-cfn-templates:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate CFN templates
+        uses: patternbox/aws-cicd-pipeline/.github/actions/run-cfn-script@main
+        with:
+          script-file: ./aws-infra/validate_cfn_templates.sh
