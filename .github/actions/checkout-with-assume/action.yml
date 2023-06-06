@@ -10,7 +10,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout and apply dot-env file
-      uses: patternbox/aws-cicd-pipeline/.github/actions/checkout-with-dotenv@main
+      uses: ./.github/actions/checkout-with-dotenv@main
 
     - name: AWS login
       uses: aws-actions/configure-aws-credentials@v2

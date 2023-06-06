@@ -14,7 +14,7 @@ runs:
   using: 'composite'
   steps:
     - name: Checkout and login to AWS
-      uses: patternbox/aws-cicd-pipeline/.github/actions/checkout-with-assume@main
+      uses: ./.github/actions/checkout-with-assume@main
 
     - name: Run script
       shell: bash

@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Create Github deployer IAM role
-        uses: patternbox/aws-cicd-pipeline/.github/actions/run-cfn-script@main
+        uses: ./.github/actions/run-cfn-script@main
         with:
           script-file: ./aws-infra/01_iam/cfn_github_deployer.sh
 
@@ -31,7 +31,7 @@ jobs:
       gate-state: ${{ steps.check-gate.outputs.gate-state }}
     steps:
       - name: Check deployment gate
-        uses: patternbox/aws-cicd-pipeline/.github/actions/check-deployment-gate@main
+        uses: ./.github/actions/check-deployment-gate@main
         id: check-gate
         with:
           gate-name: 'infrastructure'
@@ -42,7 +42,7 @@ jobs:
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
       - name: Setup DynamoDB table as deployment gate
-        uses: patternbox/aws-cicd-pipeline/.github/actions/run-cfn-script@main
+        uses: ./.github/actions/run-cfn-script@main
         with:
           script-file: ./aws-infra/02_gates/cfn_deployment_gates.sh
 
@@ -52,11 +52,11 @@ jobs:
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
       - name: Setup CloudTrail
-        uses: patternbox/aws-cicd-pipeline/.github/actions/run-cfn-script@main
+        uses: ./.github/actions/run-cfn-script@main
         with:
           script-file: ./aws-infra/03_secops/cfn_cloudtrail.sh
 
       - name: Setup CIS Alarms
-        uses: patternbox/aws-cicd-pipeline/.github/actions/run-cfn-script@main
+        uses: ./.github/actions/run-cfn-script@main
         with:
           script-file: ./aws-infra/03_secops/cfn_cis_alarms.sh
