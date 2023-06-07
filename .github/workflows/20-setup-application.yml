@@ -1,0 +1,47 @@
+name: "20 - CI/CD (Application)  🎯"
+
+on:
+  push:
+    branches: [ main ]
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#filter-pattern-cheat-sheet
+    paths:
+      - '.github/actions/**'
+      - '.github/workflows/2[0-9]*'
+      - 'chatapp-infra/**'
+      - 'chatapp-ui/**'
+  workflow_dispatch:
+    inputs:
+      DEVELOP_ACCOUNT_ID:
+        description: Overwrite develop account ID
+        required: false
+        type: string
+      PRODUCTION_ACCOUNT_ID:
+        description: Overwrite production account ID
+        required: false
+        type: string
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  run-tests:
+    name: Tests
+    uses: ./.github/workflows/21-test-application.yml
+    secrets: inherit
+
+#  build-app:
+#    name: Develop
+#    needs: [ run-tests ]
+#    uses: ./.github/workflows/22-build-application.yml
+#    secrets: inherit
+#    with:
+#      stage-env: 'DEVELOP'
+
+#  bootstrap-develop:
+#    name: Develop
+#    needs: [ build-app ]
+#    uses: ./.github/workflows/23-deploy-application.yml
+#    secrets: inherit
+#    with:
+#      stage-env: 'DEVELOP'

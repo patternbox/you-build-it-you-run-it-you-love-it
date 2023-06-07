@@ -1,0 +1,28 @@
+name: "21 --- [ Test Application ]"
+
+on:
+  workflow_call:
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  TARGET_ACCOUNT_ID: ${{ inputs.DEVELOP_ACCOUNT_ID || secrets.DEVELOP_ACCOUNT_ID }}
+
+jobs:
+  validate-cfn-templates:
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - name: Validate CFN templates
+        uses: ./.github/actions/run-cfn-script@main
+        with:
+          script-file: ./chat-infra/validate_cfn_templates.sh
+
+  do-testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Testing
+        run: |
+          echo "Do application testing here..."
