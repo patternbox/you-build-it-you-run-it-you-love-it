@@ -2,8 +2,8 @@ name: 'Prepare node cache'
 description: 'Prepare node cache'
 
 inputs:
-  cache-name:
-    description: 'the node cache name'
+  working-directory:
+    description: 'the working directory'
     required: true
 
 runs:
@@ -12,15 +12,22 @@ runs:
     - name: Checkout and apply dot-env file
       uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
 
-    - name: Setup Node
+    - name: Setup Node with cache
       uses: actions/setup-node@v3
       with:
-        node-version: "16"
+        node-version: 16
+        cache: 'npm'
+        cache-dependency-path: ${{ inputs.working-directory }}/package-lock.json
 
-    - name: Cache node modules
-      uses: actions/cache@v3
-      env:
-        cache-name: ${{ inputs.cache-name }}
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+#    - name: Setup Node
+#      uses: actions/setup-node@v3
+#      with:
+#        node-version: "16"
+#
+#    - name: Cache node modules
+#      uses: actions/cache@v3
+#      env:
+#        cache-name: ${{ inputs.cache-name }}
+#      with:
+#        path: ~/.npm
+#        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}

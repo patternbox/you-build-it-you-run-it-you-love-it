@@ -27,7 +27,8 @@ jobs:
       - name: Download node dependencies and cache them
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
-          cache-name: ${{ matrix.cacheName }}
+          # cache-name: ${{ matrix.cacheName }}
+          working-directory: ${{ matrix.cacheName }}
 
       - name: Install dependencies
         working-directory: ${{ matrix.workingDir }}
