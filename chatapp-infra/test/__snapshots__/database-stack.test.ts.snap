@@ -19,7 +19,6 @@ Object {
             "AttributeType": "S",
           },
         ],
-        "BillingMode": "PAY_PER_REQUEST",
         "KeySchema": Array [
           Object {
             "AttributeName": "connectionId",
@@ -28,6 +27,10 @@ Object {
         ],
         "PointInTimeRecoverySpecification": Object {
           "PointInTimeRecoveryEnabled": false,
+        },
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1,
         },
         "SSESpecification": Object {
           "SSEEnabled": true,
@@ -45,7 +48,6 @@ Object {
             "AttributeType": "S",
           },
         ],
-        "BillingMode": "PAY_PER_REQUEST",
         "KeySchema": Array [
           Object {
             "AttributeName": "id",
@@ -54,6 +56,10 @@ Object {
         ],
         "PointInTimeRecoverySpecification": Object {
           "PointInTimeRecoveryEnabled": false,
+        },
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1,
         },
         "SSESpecification": Object {
           "SSEEnabled": true,
@@ -76,7 +82,6 @@ Object {
             "AttributeType": "S",
           },
         ],
-        "BillingMode": "PAY_PER_REQUEST",
         "KeySchema": Array [
           Object {
             "AttributeName": "channelId",
@@ -89,6 +94,10 @@ Object {
         ],
         "PointInTimeRecoverySpecification": Object {
           "PointInTimeRecoveryEnabled": false,
+        },
+        "ProvisionedThroughput": Object {
+          "ReadCapacityUnits": 1,
+          "WriteCapacityUnits": 1,
         },
         "SSESpecification": Object {
           "SSEEnabled": true,
