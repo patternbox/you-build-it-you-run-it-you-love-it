@@ -20,9 +20,26 @@ jobs:
         with:
           script-file: ./chat-infra/validate_cfn_templates.sh
 
-  do-testing:
+  test-chatapp-infra:
     runs-on: ubuntu-latest
     steps:
-      - name: Testing
+      - name: Checkout source code
+        uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install dependencies
+        working-directory: chatapp-infra
         run: |
-          echo "Do application testing here..."
+          npm ci
