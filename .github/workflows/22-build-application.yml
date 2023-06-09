@@ -32,17 +32,16 @@ jobs:
     needs: [ check-deployment-gate ]
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
-      - name: Checkout source code
+      - name: Checkout source code and restore cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
-          cache-name: cache-node-modules-cdk
+          working-directory: chatapp-infra
 
       - name: Build service application
         working-directory: chatapp-infra
         run: |
           pwd
           ls -la
-          env | sort
           npx cdk synth
 
 
