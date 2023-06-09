@@ -40,6 +40,9 @@ jobs:
       - name: Build service application
         working-directory: chatapp-infra
         run: |
+          pwd
+          ls -la
+          env | sort
           npx cdk synth
 
 
