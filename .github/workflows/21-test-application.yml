@@ -24,20 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
-        uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
-          node-version: "16"
-
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          cache-name: cache-node-modules-cdk
 
       - name: Install dependencies
         working-directory: chatapp-infra
