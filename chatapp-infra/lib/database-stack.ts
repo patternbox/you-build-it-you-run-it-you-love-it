@@ -14,12 +14,18 @@ export class DatabaseStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    this.connectionsTable = new Table(this, 'Connections', {
-      partitionKey: { name: 'connectionId', type: AttributeType.STRING },
-      billingMode: BillingMode.PAY_PER_REQUEST,
+    const sharedDynamoSettings = {
+      billingMode: BillingMode.PROVISIONED,
+      readCapacity: 1,
+      writeCapacity: 1,
       removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production use
       encryption: TableEncryption.AWS_MANAGED,
-      pointInTimeRecovery: false // set to "true" to enable PITR
+      pointInTimeRecovery: false, // set to "true" to enable PITR      
+    }
+
+    this.connectionsTable = new Table(this, 'Connections', {
+      partitionKey: { name: 'connectionId', type: AttributeType.STRING },
+      ...sharedDynamoSettings,
     });
 
     this.channelsTable = new Table(this, 'serverless-chat-channels', {
@@ -27,11 +33,8 @@ export class DatabaseStack extends Stack {
         name: 'id',
         type: AttributeType.STRING
       },
-      billingMode: BillingMode.PAY_PER_REQUEST,
       tableName: 'serverless-chat-channels',
-      removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production use
-      encryption: TableEncryption.AWS_MANAGED,
-      pointInTimeRecovery: false // set to "true" to enable PITR
+      ...sharedDynamoSettings,
     });
 
     this.messagesTable = new Table(this, 'serverless-chat-messages', {
@@ -43,11 +46,8 @@ export class DatabaseStack extends Stack {
         name: 'sentAt',
         type: AttributeType.STRING
       },
-      billingMode: BillingMode.PAY_PER_REQUEST,
       tableName: 'serverless-chat-messages',
-      removalPolicy: RemovalPolicy.DESTROY, // NOT recommended for production use
-      encryption: TableEncryption.AWS_MANAGED,
-      pointInTimeRecovery: false // set to "true" to enable PITR
+      ...sharedDynamoSettings,
     });
   }
 };

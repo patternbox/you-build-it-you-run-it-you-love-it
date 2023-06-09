@@ -22,7 +22,7 @@ jobs:
       gate-state: ${{ steps.check-gate.outputs.gate-state }}
     steps:
       - name: Check deployment gate
-        uses: ./.github/actions/check-deployment-gate@main
+        uses: patternbox/you-build-it-you-run-it/.github/actions/check-deployment-gate@main
         id: check-gate
         with:
           gate-name: 'application'
