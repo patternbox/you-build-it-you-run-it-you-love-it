@@ -13,6 +13,7 @@ env:
 jobs:
   test-chatapp-infra:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - name: Checkout source code
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
@@ -31,6 +32,7 @@ jobs:
 
   test-chatapp-ui:
     runs-on: ubuntu-latest
+    if: false
     steps:
       - name: Checkout source code
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
@@ -44,5 +46,33 @@ jobs:
 
       - name: Run tests
         working-directory: chatapp-ui
+        run: |
+          npm test
+
+  run-tests:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - workingDir: chatapp-infra
+            cacheName: cache-node-modules-cdk
+          - workingDir: chatapp-ui
+            cacheName: cache-node-modules-ui
+
+    runs-on: ubuntu-latest
+    name: test-${{ matrix.workingDir }}
+    steps:
+      - name: Checkout source code
+        uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
+        with:
+          cache-name: ${{ matrix.cacheName }}
+
+      - name: Install dependencies
+        working-directory: ${{ matrix.workingDir }}
+        run: |
+          npm ci
+
+      - name: Run tests
+        working-directory: ${{ matrix.workingDir }}
         run: |
           npm test
