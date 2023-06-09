@@ -1,0 +1,63 @@
+name: "22 --- [ Build and Publish ]"
+
+on:
+  workflow_call:
+    inputs:
+      stage-env:
+        type: string
+        description: 'Staging environment (DEVELOP|PRODUCTION)'
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  TARGET_ACCOUNT_ID: ${{ inputs[format('{0}_ACCOUNT_ID', inputs.stage-env)] || secrets[format('{0}_ACCOUNT_ID', inputs.stage-env)] }}
+
+jobs:
+  check-deployment-gate:
+    runs-on: ubuntu-latest
+    outputs:
+      gate-state: ${{ steps.check-gate.outputs.gate-state }}
+    steps:
+      - name: Check deployment gate
+        uses: ./.github/actions/check-deployment-gate@main
+        id: check-gate
+        with:
+          gate-name: 'application'
+
+  deploy-chatapp-infra:
+    runs-on: ubuntu-latest
+    needs: [ check-deployment-gate ]
+    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
+    steps:
+      - name: Checkout source code
+        uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
+        with:
+          cache-name: cache-node-modules-cdk
+
+      - name: Build service application
+        run: |
+          npx cdk synth
+
+
+#  setup-database:
+#    runs-on: ubuntu-latest
+#    needs: [ check-deployment-gate ]
+#    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
+#    steps:
+#      - name: Setup Database
+#        uses: ./.github/actions/run-cfn-script@main
+#        with:
+#          script-file: ./chat-infra/01_database/cfn_dynamodb_tables.sh
+#
+#  setup-authentication:
+#    runs-on: ubuntu-latest
+#    needs: [ check-deployment-gate ]
+#    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
+#    steps:
+#      - name: Setup Authentication
+#        uses: ./.github/actions/run-cfn-script@main
+#        with:
+#          script-file: ./chat-infra/02_authentication/cfn_cognito_userpool.sh

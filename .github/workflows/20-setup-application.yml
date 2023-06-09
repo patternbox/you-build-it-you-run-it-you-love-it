@@ -30,13 +30,13 @@ jobs:
     uses: ./.github/workflows/21-test-application.yml
     secrets: inherit
 
-#  build-app:
-#    name: Develop
-#    needs: [ run-tests ]
-#    uses: ./.github/workflows/22-build-application.yml
-#    secrets: inherit
-#    with:
-#      stage-env: 'DEVELOP'
+  build-app:
+    name: Develop
+    needs: [ run-tests ]
+    uses: ./.github/workflows/22-build-application.yml
+    secrets: inherit
+    with:
+      stage-env: 'DEVELOP'
 
 #  bootstrap-develop:
 #    name: Develop
