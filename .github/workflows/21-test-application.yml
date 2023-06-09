@@ -24,6 +24,11 @@ jobs:
         run: |
           npm ci
 
+      - name: Run tests
+        working-directory: chatapp-infra
+        run: |
+          npm test
+
   test-chatapp-ui:
     runs-on: ubuntu-latest
     steps:
@@ -36,3 +41,8 @@ jobs:
         working-directory: chatapp-ui
         run: |
           npm ci
+
+      - name: Run tests
+        working-directory: chatapp-ui
+        run: |
+          npm test
