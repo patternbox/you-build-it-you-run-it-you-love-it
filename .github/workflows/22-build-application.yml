@@ -38,6 +38,7 @@ jobs:
           cache-name: cache-node-modules-cdk
 
       - name: Build service application
+        working-directory: chatapp-infra
         run: |
           npx cdk synth
 
