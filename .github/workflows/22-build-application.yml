@@ -53,25 +53,6 @@ jobs:
     needs: [ synth-chatapp-infra-cdk ]
     steps:
       - name: Checkout source code and restore node cache
-        uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
+        uses: patternbox/you-build-it-you-run-it/.github/actions/deploy-cdk-stack@main
         with:
-          working-directory: chatapp-infra
-
-      - name: Cache CDK templates output
-        uses: actions/cache@v3
-        with:
-          path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**') }}
-
-      - name: AWS login
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-region: ${{ env.AWS_REGION }}
-          role-to-assume: arn:aws:iam::${{ env.TARGET_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-github-deployer
-          role-duration-seconds: 900
-          role-skip-session-tagging: true
-
-      - name: Setup database stack
-        working-directory: chatapp-infra
-        run: |
-          npx cdk deploy DatabaseStack --app 'cdk.out/' --require-approval never
+          stack-name: DatabaseStack
