@@ -49,6 +49,7 @@ Resources:
               - lambda:*
               - logs:*
               - iam:*
+              - ssm:*
               - kms:*
               - s3:*
             Resource: "*"

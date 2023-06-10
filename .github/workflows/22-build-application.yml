@@ -37,12 +37,22 @@ jobs:
         with:
           working-directory: chatapp-infra
 
+      - name: Cache CDK templates output
+        uses: actions/cache@v3
+        with:
+          path: chatapp-infra/cdk.out
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk.out') }}
+
       - name: Synthesize CDK code
         working-directory: chatapp-infra
         run: |
           npx cdk synth
-          echo "---------------------------------------------"
-          ls -la cdk.out
+
+  deploy-database-stack:
+    runs-on: ubuntu-latest
+    needs: [ synth-chatapp-infra-cdk ]
+    if: false
+    steps:
 
       - name: AWS login
         uses: aws-actions/configure-aws-credentials@v2
@@ -56,24 +66,3 @@ jobs:
         working-directory: chatapp-infra
         run: |
           npx cdk deploy DatabaseStack --app 'cdk.out/' --require-approval never
-
-
-#  setup-database:
-#    runs-on: ubuntu-latest
-#    needs: [ check-deployment-gate ]
-#    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
-#    steps:
-#      - name: Setup Database
-#        uses: ./.github/actions/run-cfn-script@main
-#        with:
-#          script-file: ./chat-infra/01_database/cfn_dynamodb_tables.sh
-#
-#  setup-authentication:
-#    runs-on: ubuntu-latest
-#    needs: [ check-deployment-gate ]
-#    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
-#    steps:
-#      - name: Setup Authentication
-#        uses: ./.github/actions/run-cfn-script@main
-#        with:
-#          script-file: ./chat-infra/02_authentication/cfn_cognito_userpool.sh
