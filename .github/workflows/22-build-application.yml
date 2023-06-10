@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk/**') }}
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**') }}
 
       - name: Synthesize CDK code
         working-directory: chatapp-infra
@@ -61,7 +61,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk/**') }}
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**') }}
 
       - name: AWS login
         uses: aws-actions/configure-aws-credentials@v2
