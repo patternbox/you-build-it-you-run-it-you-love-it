@@ -16,17 +16,6 @@ env:
   TARGET_ACCOUNT_ID: ${{ inputs[format('{0}_ACCOUNT_ID', inputs.stage-env)] || secrets[format('{0}_ACCOUNT_ID', inputs.stage-env)] }}
 
 jobs:
-  check-deployment-gate:
-    runs-on: ubuntu-latest
-    outputs:
-      gate-state: ${{ steps.check-gate.outputs.gate-state }}
-    steps:
-      - name: Check deployment gate
-        uses: patternbox/you-build-it-you-run-it/.github/actions/check-deployment-gate@main
-        id: check-gate
-        with:
-          gate-name: 'application'
-
   synth-chatapp-infra-cdk:
     runs-on: ubuntu-latest
     needs: [ check-deployment-gate ]
@@ -50,9 +39,21 @@ jobs:
         run: |
           npx cdk synth
 
-  deploy-authentication-stack:
+  check-deployment-gate:
     runs-on: ubuntu-latest
     needs: [ synth-chatapp-infra-cdk ]
+    outputs:
+      gate-state: ${{ steps.check-gate.outputs.gate-state }}
+    steps:
+      - name: Check deployment gate
+        uses: patternbox/you-build-it-you-run-it/.github/actions/check-deployment-gate@main
+        id: check-gate
+        with:
+          gate-name: 'application'
+
+  deploy-authentication-stack:
+    runs-on: ubuntu-latest
+    needs: [ check-deployment-gate ]
     steps:
       - name: Checkout, restore CDK cache and deploy stack
         uses: patternbox/you-build-it-you-run-it/.github/actions/deploy-cdk-stack@main
@@ -61,7 +62,7 @@ jobs:
 
   deploy-database-stack:
     runs-on: ubuntu-latest
-    needs: [ synth-chatapp-infra-cdk ]
+    needs: [ check-deployment-gate ]
     steps:
       - name: Checkout, restore CDK cache and deploy stack
         uses: patternbox/you-build-it-you-run-it/.github/actions/deploy-cdk-stack@main
