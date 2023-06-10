@@ -51,7 +51,7 @@ jobs:
         id: cache-cdk-out
         with:
           path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**') }}
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**', 'chatapp-infra/resources/**') }}
 
       - name: Synthesize CDK code
         working-directory: chatapp-infra
