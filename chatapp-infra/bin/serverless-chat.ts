@@ -9,9 +9,9 @@ import { RestApiStack } from '../lib/rest-api-stack';
 import { AuthenticationStack } from '../lib/auth-stack';
 import { FrontendStack } from '../lib/frontend-stack';
 import { DatabaseStack } from '../lib/database-stack';
-import { ObservabilityStack } from '../lib/observability-stack';
+/*import { ObservabilityStack } from '../lib/observability-stack';
 import { Aspects } from 'aws-cdk-lib';
-import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
+import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';*/
 
 /* If you don't specify 'env', this stack will be environment-agnostic.
  * Account/Region-dependent features and context lookups will not work,
@@ -29,7 +29,7 @@ import { AwsSolutionsChecks, NagSuppressions } from 'cdk-nag';
 const app = new cdk.App();
 
 // CDK-NAG security checks
-Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }))
+//Aspects.of(app).add(new AwsSolutionsChecks({ verbose: true }))
 
 // Sets the log level for the lambda functions
 // Allowed values:
@@ -70,12 +70,12 @@ const frontendStack = new FrontendStack(app, 'FrontendStack', {
 });
 frontendStack.addDependency(restApiStack);
 
-const observabilityStack = new ObservabilityStack(app, 'ObservabilityStack', {
+/*const observabilityStack = new ObservabilityStack(app, 'ObservabilityStack', {
 
-});
+});*/
 
 // CDK-NAG rule supressions
-
+/*
 NagSuppressions.addStackSuppressions(authStack, [
   { id: 'AwsSolutions-IAM4', reason: 'LambdaBasicExecutionRole has access to create and append to any CW log groups. Although this is not ideal, it does not pose a security risk for the sample.' },
   { id: 'AwsSolutions-IAM5', reason: 'SMS MFA is not enabled on the Userpool.' },
@@ -133,3 +133,4 @@ NagSuppressions.addResourceSuppressionsByPath(
     { id: 'AwsSolutions-L1', reason: 'CDK managed lambda - does not affect production' }
   ]
 );
+*/

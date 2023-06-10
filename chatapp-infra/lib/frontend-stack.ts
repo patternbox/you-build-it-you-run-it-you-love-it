@@ -13,7 +13,7 @@ import * as origins from 'aws-cdk-lib/aws-cloudfront-origins';
 import * as iam from 'aws-cdk-lib/aws-iam';
 import * as s3 from 'aws-cdk-lib/aws-s3';
 import { WebSocketApi } from '@aws-cdk/aws-apigatewayv2-alpha';
-import { NagSuppressions } from 'cdk-nag';
+//import { NagSuppressions } from 'cdk-nag';
 import { AnyPrincipal, Effect, PolicyStatement } from 'aws-cdk-lib/aws-iam';
 
 export interface FrontendProps extends StackProps {
@@ -103,7 +103,7 @@ export class FrontendStack extends Stack {
       //logFilePrefix: 'distribution-access-logs/',
       //logIncludesCookies: true
     });
-    NagSuppressions.addResourceSuppressions(
+    /*NagSuppressions.addResourceSuppressions(
       distribution,
       [
         {
@@ -118,7 +118,7 @@ export class FrontendStack extends Stack {
         },
       ],
       true
-    );
+    );*/
 
 
     // Custom Cloudfront cache policy to forward Authorization header
@@ -171,6 +171,7 @@ export class FrontendStack extends Stack {
       distributionPaths: ['/'],
     });
 
+    /*
     // Retrieving Cognito Userpool from existing resource - resolving circular stack dependency
     const userPool = UserPool.fromUserPoolId(this, "UserPool", props?.cognitoUserPoolId!);
     const appClient = userPool.addClient('websocket-frontend', {
@@ -228,6 +229,6 @@ export class FrontendStack extends Stack {
       exportName: 'cognitoSigninURL',
     });
     new CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
-    new CfnOutput(this, 'DistributionURL', { value: distribution.distributionDomainName });
+    new CfnOutput(this, 'DistributionURL', { value: distribution.distributionDomainName });*/
   }
 };
