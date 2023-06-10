@@ -41,7 +41,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk') }}
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk/**') }}
 
       - name: Synthesize CDK code
         working-directory: chatapp-infra
@@ -51,7 +51,6 @@ jobs:
   deploy-database-stack:
     runs-on: ubuntu-latest
     needs: [ synth-chatapp-infra-cdk ]
-    if: false
     steps:
       - name: Checkout source code and restore node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
@@ -62,7 +61,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: chatapp-infra/cdk.out
-          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk') }}
+          key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/cdk/**') }}
 
       - name: AWS login
         uses: aws-actions/configure-aws-credentials@v2
