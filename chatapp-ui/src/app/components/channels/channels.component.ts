@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { Channel } from '../../../../../infrastructure-ts/resources/models/channel';
+import { Channel } from '../../../../../chatapp-infra/resources/models/channel';
 import { AddChannelComponent } from '../add-channel/add-channel.component';
 
 export interface Section {
@@ -30,7 +30,7 @@ export class ChannelsComponent implements OnInit {
       }
   }
 
-  constructor(public dialog: MatDialog, 
+  constructor(public dialog: MatDialog,
               public apiService: ApiService,
               public router: Router) { }
 

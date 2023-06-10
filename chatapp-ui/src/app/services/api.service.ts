@@ -3,9 +3,9 @@
 
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { User } from '../../../../infrastructure-ts/resources/models/user';
-import { Channel } from '../../../../infrastructure-ts/resources/models/channel';
-import { Message } from '../../../../infrastructure-ts/resources/models/message';
+import { User } from '../../../../chatapp-infra/resources/models/user';
+import { Channel } from '../../../../chatapp-infra/resources/models/channel';
+import { Message } from '../../../../chatapp-infra/resources/models/message';
 import { AppConfigService } from './config.service';
 
 @Injectable({
