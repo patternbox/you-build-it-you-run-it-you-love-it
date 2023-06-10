@@ -16,7 +16,7 @@ env:
   TARGET_ACCOUNT_ID: ${{ inputs[format('{0}_ACCOUNT_ID', inputs.stage-env)] || secrets[format('{0}_ACCOUNT_ID', inputs.stage-env)] }}
 
 jobs:
-  build-chatapp-ui:
+  build-chatapp:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code and restore node cache
@@ -38,21 +38,10 @@ jobs:
           npm install -g @angular/cli@15.1.3
           ng build
 
-  synth-chatapp-infra-cdk:
-    runs-on: ubuntu-latest
-    needs: [ build-chatapp-ui ] # requires chatapp-ui/dist folder content
-    steps:
       - name: Checkout source code and restore node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
           working-directory: chatapp-infra
-
-      - name: Restore Angular dist/** folder
-        uses: actions/cache@v3
-        id: cache-ui-dist
-        with:
-          path: chatapp-ui/dist
-          key: ${{ runner.os }}-cache-ui-dist-${{ hashFiles('chatapp-ui/**') }}
 
       - name: Cache CDK templates output
         uses: actions/cache@v3
