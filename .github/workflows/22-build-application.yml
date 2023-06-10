@@ -48,7 +48,6 @@ jobs:
       - name: Build service application
         working-directory: chatapp-infra
         run: |
-          ls -la cdk.out
           npx cdk synth
           echo "---------------------------------------------"
           ls -la cdk.out
