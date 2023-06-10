@@ -58,7 +58,7 @@ jobs:
 
   check-deployment-gate:
     runs-on: ubuntu-latest
-    needs: [ build-chatapp-ui, synth-chatapp-infra-cdk ]
+    needs: [ build-chatapp ]
     outputs:
       gate-state: ${{ steps.check-gate.outputs.gate-state }}
     steps:
