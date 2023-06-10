@@ -27,30 +27,35 @@ jobs:
         with:
           gate-name: 'application'
 
-  deploy-chatapp-infra:
+  synth-chatapp-infra-cdk:
     runs-on: ubuntu-latest
     needs: [ check-deployment-gate ]
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
-      - name: Checkout source code and restore cache
+      - name: Checkout source code and restore node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
           working-directory: chatapp-infra
 
-      - name: Build service application
-        working-directory: chatapp-infra
-        run: |
-          pwd
-          ls -la
-          npm ci
-          ls -la
-
-      - name: Build service application
+      - name: Synthesize CDK code
         working-directory: chatapp-infra
         run: |
           npx cdk synth
           echo "---------------------------------------------"
           ls -la cdk.out
+
+      - name: AWS login
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: arn:aws:iam::${{ env.TARGET_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-github-deployer
+          role-duration-seconds: 900
+          role-skip-session-tagging: true
+
+      - name: Setup database stack
+        working-directory: chatapp-infra
+        run: |
+          npx cdk deploy DatabaseStack --app 'cdk.out/' --require-approval never
 
 
 #  setup-database:

@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     name: test-${{ matrix.workingDir }}
     steps:
-      - name: Download node dependencies and cache them
+      - name: Checkout and prepare node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
         with:
           working-directory: ${{ matrix.workingDir }}
