@@ -39,12 +39,14 @@ jobs:
 
       - name: Cache CDK templates output
         uses: actions/cache@v3
+        id: cache-cdk-out
         with:
           path: chatapp-infra/cdk.out
           key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**') }}
 
       - name: Synthesize CDK code
         working-directory: chatapp-infra
+        if: ${{ steps.cache-cdk-out.outputs.cache-hit != 'true' }}
         run: |
           npx cdk synth
 
