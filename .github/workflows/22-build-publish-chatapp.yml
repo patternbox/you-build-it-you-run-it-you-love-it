@@ -35,6 +35,7 @@ jobs:
         working-directory: chatapp-ui
         if: ${{ steps.cache-ui-dist.outputs.cache-hit != 'true' }}
         run: |
+          npm install -g @angular/cli@15.1.3
           ng build
 
   synth-chatapp-infra-cdk:
