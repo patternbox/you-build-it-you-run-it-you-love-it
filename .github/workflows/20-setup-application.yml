@@ -27,21 +27,13 @@ permissions:
 jobs:
   run-tests:
     name: Tests
-    uses: ./.github/workflows/21-test-application.yml
+    uses: ./.github/workflows/21-test-chatapp.yml
     secrets: inherit
 
   build-app:
     name: Develop
     needs: [ run-tests ]
-    uses: ./.github/workflows/22-build-application.yml
+    uses: ./.github/workflows/22-build-publish-chatapp.yml
     secrets: inherit
     with:
       stage-env: 'DEVELOP'
-
-#  bootstrap-develop:
-#    name: Develop
-#    needs: [ build-app ]
-#    uses: ./.github/workflows/23-deploy-application.yml
-#    secrets: inherit
-#    with:
-#      stage-env: 'DEVELOP'
