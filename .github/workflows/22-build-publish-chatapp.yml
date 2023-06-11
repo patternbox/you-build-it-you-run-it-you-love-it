@@ -24,21 +24,12 @@ jobs:
         with:
           working-directory: chatapp-ui
 
-#      - name: Cache Angular dist/** folder
-#        uses: actions/cache@v3
-#        id: cache-ui-dist
-#        with:
-#          path: chatapp-ui/dist
-#          key: ${{ runner.os }}-cache-ui-dist-${{ hashFiles('chatapp-ui/**') }}
-
       - name: Build Angular UI app
         working-directory: chatapp-ui
         if: ${{ steps.cache-ui-dist.outputs.cache-hit != 'true' }}
         run: |
           npm install -g @angular/cli@15.1.3
           ng build
-          pwd
-          ls -la dist
 
       - name: Checkout source code and restore node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
@@ -56,7 +47,7 @@ jobs:
         working-directory: chatapp-infra
         if: ${{ steps.cache-cdk-out.outputs.cache-hit != 'true' }}
         run: |
-          ls -d ../*
+          ls -d ../chatapp-ui/*
           npx cdk synth
 
   check-deployment-gate:
