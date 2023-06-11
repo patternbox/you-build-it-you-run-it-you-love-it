@@ -27,6 +27,13 @@ jobs:
         with:
           node-version: "16"
 
+      - name: Cache Angular dist/** folder
+        uses: actions/cache@v3
+        id: cache-ui-dist
+        with:
+          path: chatapp-ui/dist
+          key: ${{ runner.os }}-cache-ui-dist-${{ hashFiles('chatapp-ui/**') }}
+
       - name: Cache node modules (chatapp-infra)
         uses: actions/cache@v3
         env:
@@ -36,13 +43,6 @@ jobs:
           path: |
             ~/.npm
             chatapp-infra/node_modules
-
-      - name: Cache Angular dist/** folder
-        uses: actions/cache@v3
-        id: cache-ui-dist
-        with:
-          path: chatapp-ui/dist
-          key: ${{ runner.os }}-cache-ui-dist-${{ hashFiles('chatapp-ui/**') }}
 
       - name: Cache node modules (chatapp-ui)
         uses: actions/cache@v3
