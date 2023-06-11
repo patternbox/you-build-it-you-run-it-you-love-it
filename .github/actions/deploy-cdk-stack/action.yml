@@ -17,6 +17,7 @@ runs:
     - name: Cache CDK templates output
       uses: actions/cache@v3
       with:
+        fail-on-cache-miss: true
         path: chatapp-infra/cdk.out
         key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**', 'chatapp-infra/resources/**') }}
 

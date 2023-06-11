@@ -1,4 +1,4 @@
-name: "21 --- [ Test Application ]"
+name: "21 --- [ Test Chat-Application ]"
 
 on:
   workflow_call:

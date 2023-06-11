@@ -33,7 +33,15 @@ jobs:
   build-app:
     name: Develop
     needs: [ run-tests ]
-    uses: ./.github/workflows/22-build-publish-chatapp.yml
+    uses: ./.github/workflows/22-build-chatapp.yml
+    secrets: inherit
+    with:
+      stage-env: 'DEVELOP'
+
+  publish-app:
+    name: Develop
+    needs: [ build-app ]
+    uses: ./.github/workflows/23-publish-chatapp.yml
     secrets: inherit
     with:
       stage-env: 'DEVELOP'
