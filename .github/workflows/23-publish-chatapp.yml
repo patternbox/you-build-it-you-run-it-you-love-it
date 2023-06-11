@@ -1,4 +1,4 @@
-name: "23 --- [ Publish ]"
+name: "23 --- [ Publish Application ]"
 
 on:
   workflow_call:

@@ -6,6 +6,11 @@ inputs:
     description: 'the working directory'
     required: true
 
+outputs:
+  cache-hit:
+    description: "The deployment gate state [open|closed]"
+    value: ${{ steps.node-cache.outputs.cache-hit }}
+
 runs:
   using: 'composite'
   steps:
@@ -19,6 +24,7 @@ runs:
 
     - name: Cache node modules
       uses: actions/cache@v3
+      id: node-cache
       env:
         cache-name: ${{ inputs.working-directory }}
         package-lock-json: ${{ inputs.working-directory }}/package-lock.json

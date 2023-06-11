@@ -1,4 +1,4 @@
-name: "21 --- [ Test Chat-Application ]"
+name: "21 --- [ Test Application ]"
 
 on:
   workflow_call:
@@ -26,11 +26,13 @@ jobs:
     steps:
       - name: Checkout and prepare node cache
         uses: patternbox/you-build-it-you-run-it/.github/actions/prepare-node-cache@main
+        id: node-cache
         with:
           working-directory: ${{ matrix.workingDir }}
 
       - name: Install dependencies
         working-directory: ${{ matrix.workingDir }}
+        if: ${{ steps.node-cache.outputs.cache-hit != 'true' }}
         run: |
           npm ci
 
