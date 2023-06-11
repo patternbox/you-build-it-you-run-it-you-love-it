@@ -1,4 +1,4 @@
-name: "22 --- [ Build Application ]"
+name: "22 --- [ Build Chatapp ]"
 
 on:
   workflow_call:

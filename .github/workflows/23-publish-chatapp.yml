@@ -1,4 +1,4 @@
-name: "23 --- [ Publish Application ]"
+name: "23 --- [ Publish Chatapp ]"
 
 on:
   workflow_call:
@@ -56,7 +56,7 @@ jobs:
         with:
           stack-name: WebsocketStack
 
-  deploy-rest-api-stack:
+  deploy-restapi-stack:
     runs-on: ubuntu-latest
     needs: [ deploy-websocket-stack ]
     steps:
@@ -64,3 +64,12 @@ jobs:
         uses: patternbox/you-build-it-you-run-it/.github/actions/deploy-cdk-stack@main
         with:
           stack-name: RestApiStack
+
+  deploy-frontend-stack:
+    runs-on: ubuntu-latest
+    needs: [ deploy-restapi-stack ]
+    steps:
+      - name: Checkout, restore CDK cache and deploy stack
+        uses: patternbox/you-build-it-you-run-it/.github/actions/deploy-cdk-stack@main
+        with:
+          stack-name: FrontendStack
