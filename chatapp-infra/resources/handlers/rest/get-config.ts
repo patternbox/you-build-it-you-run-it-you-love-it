@@ -7,14 +7,13 @@ import { Logger } from '@aws-lambda-powertools/logger';
 import { LambdaInterface } from '@aws-lambda-powertools/commons';
 
 const { LOG_LEVEL } = process.env;
-//const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: LOG_LEVEL });
-const logger = new Logger({ serviceName: 'websocketMessagingService' });
+const logger = new Logger({ serviceName: 'websocketMessagingService', logLevel: <any> LOG_LEVEL });
 const tracer = new Tracer({ serviceName: 'websocketMessagingService' });
 const AWS = tracer.captureAWS(require('aws-sdk'));
 const ssm = tracer.captureAWSClient(new AWS.SSM());
 
 class Lambda implements LambdaInterface {
-  @tracer.captureLambdaHandler()
+  // @tracer.captureLambdaHandler()
   public async handler(event: APIGatewayProxyEvent, context: any): Promise<APIGatewayProxyResult> {
 
     let response: APIGatewayProxyResult = { statusCode: 200, body: "OK" };
