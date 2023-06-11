@@ -171,7 +171,6 @@ export class FrontendStack extends Stack {
       distributionPaths: ['/'],
     });
 
-    /*
     // Retrieving Cognito Userpool from existing resource - resolving circular stack dependency
     const userPool = UserPool.fromUserPoolId(this, "UserPool", props?.cognitoUserPoolId!);
     const appClient = userPool.addClient('websocket-frontend', {
@@ -188,6 +187,7 @@ export class FrontendStack extends Stack {
       idTokenValidity: Duration.minutes(720),
     });
 
+    /*
     // Generate a cognito app client with a returnURL pointing to the Cloudfront distribution url
     const domain = userPool.addDomain('Domain', {
       cognitoDomain: {
@@ -206,6 +206,7 @@ export class FrontendStack extends Stack {
       stringValue: cognitoSignInUrl,
       tier: ParameterTier.STANDARD,
     });
+*/
 
     const websocketUrlParameter = new StringParameter(this, 'WebsocketURLParameter', {
       allowedPattern: '.*',
@@ -223,12 +224,14 @@ export class FrontendStack extends Stack {
       tier: ParameterTier.STANDARD,
     });
 
+/*    
     new CfnOutput(this, 'cognitoSigninURL', {
       value: cognitoSignInUrl,
       description: 'SignIn URL for Cognito Userpool',
       exportName: 'cognitoSigninURL',
     });
+*/
     new CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
-    new CfnOutput(this, 'DistributionURL', { value: distribution.distributionDomainName });*/
+    new CfnOutput(this, 'DistributionURL', { value: distribution.distributionDomainName });
   }
 };
