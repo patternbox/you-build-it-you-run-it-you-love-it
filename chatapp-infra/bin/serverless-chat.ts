@@ -34,7 +34,7 @@ const app = new cdk.App();
 // Sets the log level for the lambda functions
 // Allowed values:
 // DEBUG | INFO | WARN | ERROR
-const LOG_LEVEL = "ERROR"; 
+const LOG_LEVEL = "DEBUG";
 
 const authStack = new AuthenticationStack(app, 'AuthenticationStack', {});
 

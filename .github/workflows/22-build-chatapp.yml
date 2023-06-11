@@ -59,7 +59,7 @@ jobs:
         if: ${{ steps.cache-ui-dist.outputs.cache-hit != 'true' }}
         run: |
           npm install -g @angular/cli@15.1.3
-          ng build
+          ng build --prod
 
       - name: Cache CDK templates output
         uses: actions/cache@v3
