@@ -9,6 +9,8 @@ on:
       - '.github/workflows/2[0-9]*'
       - 'chatapp-infra/**'
       - 'chatapp-ui/**'
+  pull_request:
+    types: [ closed ]
   workflow_dispatch:
     inputs:
       DEVELOP_ACCOUNT_ID:
