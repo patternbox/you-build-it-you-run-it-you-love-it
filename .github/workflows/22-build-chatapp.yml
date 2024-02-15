@@ -28,14 +28,14 @@ jobs:
           node-version: "16"
 
       - name: Cache Angular dist/** folder
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-ui-dist
         with:
           path: chatapp-ui/dist
           key: ${{ runner.os }}-cache-ui-dist-${{ hashFiles('chatapp-ui/**') }}
 
       - name: Cache node modules (chatapp-infra)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           package-lock-json: chatapp-infra/package-lock.json
         with:
@@ -45,7 +45,7 @@ jobs:
             chatapp-infra/node_modules
 
       - name: Cache node modules (chatapp-ui)
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         env:
           package-lock-json: chatapp-ui/package-lock.json
         with:
@@ -62,7 +62,7 @@ jobs:
           ng build
 
       - name: Cache CDK templates output
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         id: cache-cdk-out
         with:
           path: chatapp-infra/cdk.out
