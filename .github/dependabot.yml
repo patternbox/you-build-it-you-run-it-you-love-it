@@ -1,0 +1,58 @@
+version: 2
+
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/check-deployment-gate"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/checkout-with-assume"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/checkout-with-dotenv"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/deploy-cdk-stack"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/prepare-node-cache"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
+
+  - package-ecosystem: "github-actions"
+    directory: "/run-cfn-script"
+    open-pull-requests-limit: 10
+    schedule:
+      interval: "daily"
+      time: "04:00"
+      timezone: "Europe/Berlin"
