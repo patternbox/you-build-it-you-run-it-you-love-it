@@ -1,0 +1,14 @@
+name: "91 - Merge PullRequest"
+
+on: pull_request_target
+
+permissions:
+  pull-requests: write
+  contents: write
+
+jobs:
+  run-tests:
+    name: Test-and-Build
+    uses: ./.github/workflows/21-test-chatapp.yml
+    secrets: inherit
+
