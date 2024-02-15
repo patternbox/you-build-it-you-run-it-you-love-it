@@ -3,6 +3,7 @@ name: "91 - Merge PullRequest"
 on: pull_request_target
 
 permissions:
+  id-token: write
   pull-requests: write
   contents: write
 
