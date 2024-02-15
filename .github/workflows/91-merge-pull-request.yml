@@ -13,3 +13,20 @@ jobs:
     uses: ./.github/workflows/21-test-chatapp.yml
     secrets: inherit
 
+  merge-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+    - name: dependabot-metadata
+      id: metadata
+      uses: dependabot/fetch-metadata@v1.6.0
+
+    - name: pullrequest-auto-merge
+      if: steps.metadata.outputs.update-type != 'version-update:semver-major'
+      run: |
+        gh pr merge --auto --squash "${{ github.event.pull_request.html_url }}"
+
+    - name: pullrequest-rebase
+      if: failure()
+      run: |
+        gh pr comment "${{ github.event.pull_request.html_url }}" --body "@dependabot rebase"
+        echo "Trigger dependabot rebase"
