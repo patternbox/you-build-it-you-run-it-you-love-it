@@ -23,7 +23,7 @@ jobs:
         uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "16"
 
