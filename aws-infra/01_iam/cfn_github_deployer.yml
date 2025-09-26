@@ -49,6 +49,8 @@ Resources:
               - iam:*
               - ssm:*
               - kms:*
+              - ec2:*
+              - ecs:*
               - s3:*
             Resource: "*"
           - Sid: RestrictToEuCentral1
