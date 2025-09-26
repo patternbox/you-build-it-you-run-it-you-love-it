@@ -18,12 +18,12 @@ runs:
       uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
 
     - name: Setup Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v5
       with:
         node-version: "16"
 
     - name: Cache node modules
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: node-cache
       env:
         cache-name: ${{ inputs.working-directory }}

@@ -15,14 +15,14 @@ runs:
         working-directory: chatapp-infra
 
     - name: Cache CDK templates output
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         fail-on-cache-miss: true
         path: chatapp-infra/cdk.out
         key: ${{ runner.os }}-cache-cdk-out-${{ hashFiles('chatapp-infra/bin/**', 'chatapp-infra/lib/**', 'chatapp-infra/resources/**') }}
 
     - name: AWS login
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v5
       with:
         aws-region: ${{ env.AWS_REGION }}
         role-to-assume: arn:aws:iam::${{ env.TARGET_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-github-deployer

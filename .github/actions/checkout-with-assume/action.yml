@@ -13,7 +13,7 @@ runs:
       uses: patternbox/you-build-it-you-run-it/.github/actions/checkout-with-dotenv@main
 
     - name: AWS login
-      uses: aws-actions/configure-aws-credentials@v2
+      uses: aws-actions/configure-aws-credentials@v5
       with:
         aws-region: ${{ env.AWS_REGION || inputs.aws-region }}
         role-to-assume: arn:aws:iam::${{ env.TARGET_ACCOUNT_ID }}:role/${{ env.PROJECT_NAME }}-github-deployer
