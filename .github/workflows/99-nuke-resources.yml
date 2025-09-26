@@ -1,0 +1,38 @@
+# https://github.com/ikatyang/emoji-cheat-sheet
+name: "99 - Nuke resources  🌛"
+
+permissions:
+  id-token: write
+  contents: read
+
+on:
+  workflow_dispatch:
+
+env:
+  TARGET_ACCOUNT_ID: ${{ vars.DEVELOP_ACCOUNT_ID }}
+  NUKE_VERSION: "v2.23.0"
+
+jobs:
+  nuke-aws-resources:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout with AWS Login
+        uses: patternbox/aws-cicd-pipeline/.github/action/checkout-with-assume@main
+
+      - name: Install Nuke
+        run: |
+          # Download and extract aws-nuke binary
+          wget https://github.com/rebuy-de/aws-nuke/releases/download/${{ env.NUKE_VERSION }}/aws-nuke-${{ env.NUKE_VERSION }}-linux-amd64.tar.gz --no-check-certificate
+          tar xvf aws-nuke-${{ env.NUKE_VERSION }}-linux-amd64.tar.gz
+
+          # Make the binary executable
+          chmod u+x aws-nuke-${{ env.NUKE_VERSION }}-linux-amd64
+          sudo mv aws-nuke-${{ env.NUKE_VERSION }}-linux-amd64 /usr/local/bin/aws-nuke
+
+      - name: Run Nuke
+        run: |
+          aws-nuke \
+            --config aws-nuke/nuke-config.yml \
+            --no-dry-run \
+            --force
+

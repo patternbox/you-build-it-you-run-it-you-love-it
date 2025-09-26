@@ -1,0 +1,39 @@
+regions:
+  - us-east-1
+  - eu-central-1
+  - eu-west-1
+  - global
+
+account-blocklist:
+  - "123456789012" # xxx account
+
+resource-types:
+  # only nuke these resources
+  targets:
+    - CloudFormationStack
+
+accounts:
+  # sed -e "s/\$ACCOUNT_ID/$ACCOUNT_ID/g" nuke-config-template.yml > nuke-config.yml
+  "$ACCOUNT_ID": # AWS account ID
+    presets:
+      - "sandbox"
+      - "cicd-pipeline"
+
+presets:
+  sandbox: # sandbox experiments
+    filters:
+      CloudFormationStack:
+        - property: Name
+          type: glob
+          value: "cicd-pipeline-*"
+        - property: Name
+          type: glob
+          value: "awscert-*"
+
+  cicd-pipeline: # initial stacks
+    filters:
+      CloudFormationStack:
+        - "cicd-pipeline-bootstrap-deployer"
+        - property: Name
+          type: glob
+          value: "cicd-pipeline-lambda-*"
