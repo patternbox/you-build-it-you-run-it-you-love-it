@@ -76,3 +76,14 @@ jobs:
         with:
           script-file: ./aws-infra/04_network/cfn_vpc.sh
 
+  setup-cluster:
+    runs-on: ubuntu-latest
+    needs: [ check-deployment-gate ]
+    if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Setup ECS
+        uses: ./.github/actions/run-cfn-script
+        with:
+          script-file: ./aws-infra/05_container/cfn_ecs_cluster.sh
+
