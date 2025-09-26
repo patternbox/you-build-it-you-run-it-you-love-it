@@ -15,6 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Validate CFN templates
-        uses: .github/actions/run-cfn-script@main
+        uses: .github/actions/run-cfn-script
         with:
           script-file: ./aws-infra/validate_cfn_templates.sh
