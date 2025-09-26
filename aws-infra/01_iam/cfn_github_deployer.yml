@@ -8,8 +8,6 @@ Parameters:
     Type: String
   RepositoryPath:
     Type: String
-  GithubThumbprint:
-    Type: String
 
   PermissionsBoundaryNameSuffix:
     Description: The name suffix of the permissions boundary
@@ -25,7 +23,7 @@ Resources:
       ClientIdList:
         - sts.amazonaws.com
       ThumbprintList:
-        - !Sub "${GithubThumbprint}"
+        - "1234567890123456789012345678901234567890"
 
   ###### Permissions Boundary ######
 

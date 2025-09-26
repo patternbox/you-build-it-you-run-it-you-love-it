@@ -3,21 +3,24 @@
 pushd "$(dirname $0)" > /dev/null
 source ../../.env
 
-# Get Github Thumbprint
-ServerUrl=token.actions.githubusercontent.com
-GithubThumbprint=$(openssl s_client -servername $ServerUrl -showcerts -connect $ServerUrl:443 < /dev/null 2>/dev/null \
-  | grep "BEGIN CERTIFICATE" -A40 | tail -41 | grep 'END CERTIFICATE' -B 32 \
-  | openssl x509 -fingerprint -sha1 -noout | sed -e 's/://g' | cut -d= -f2)
-
-echo "Github Thumbprint: ${GithubThumbprint}"
-
-if [ -z ${GithubThumbprint} ]; then
-  echo "Github Thumbprint can't be null"
-  exit 1
-fi
-
 CfnStack=${PROJECT_NAME}-github-deployer
 CfnTemplate=cfn_github_deployer.yml
+
+# Auto-detect Github repository path from git remote URL
+GithubRepoUrl=$(git config --get remote.origin.url)
+
+if [[ ! "$GithubRepoUrl" =~ "github.com" ]]; then
+    echo "The remote origin URL is not a GitHub URL: $GithubRepoUrl"
+    exit 1
+fi
+
+GithubRepoPath=$(echo "$GithubRepoUrl" | sed -e 's/.*github.com[:/]//' -e 's/\.git$//')
+
+if [ -z "$GithubRepoPath" ]; then
+  echo "Could not determine Github repository path from remote URL: $GithubRepoUrl"
+  exit 1
+fi
+echo "Auto-detected Github Repository Path: ${GithubRepoPath}"
 
 # https://awscli.amazonaws.com/v2/documentation/api/latest/reference/cloudformation/deploy.html
 aws cloudformation deploy \
@@ -27,7 +30,6 @@ aws cloudformation deploy \
   --capabilities CAPABILITY_NAMED_IAM \
   --parameter-overrides \
       ProjectName=$PROJECT_NAME \
-      RepositoryPath=$REPOSITORY_PATH \
-      GithubThumbprint=$GithubThumbprint
+      RepositoryPath=$GithubRepoPath
 
 popd > /dev/null
