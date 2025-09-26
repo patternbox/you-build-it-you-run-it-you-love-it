@@ -19,6 +19,7 @@ jobs:
   setup-github-deployer:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v5
       - name: Create Github deployer IAM role
         uses: ./.github/actions/run-cfn-script
         with:
@@ -30,6 +31,7 @@ jobs:
     outputs:
       gate-state: ${{ steps.check-gate.outputs.gate-state }}
     steps:
+      - uses: actions/checkout@v5
       - name: Check deployment gate
         uses: ./.github/actions/check-deployment-gate
         id: check-gate
@@ -41,6 +43,7 @@ jobs:
     needs: [ check-deployment-gate ]
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
+      - uses: actions/checkout@v5
       - name: Setup DynamoDB table as deployment gate
         uses: ./.github/actions/run-cfn-script
         with:
@@ -51,6 +54,7 @@ jobs:
     needs: [ check-deployment-gate ]
     if: ${{ needs.check-deployment-gate.outputs.gate-state == 'open' }}
     steps:
+      - uses: actions/checkout@v5
       - name: Setup CloudTrail
         uses: ./.github/actions/run-cfn-script
         with:
