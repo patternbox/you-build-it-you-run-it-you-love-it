@@ -1,3 +1,5 @@
+# Archived - This AWS Sample is now archived and will not be maintained going forward. The recommended approach for implementing WebSocket chat applications is using [AWS AppSync](https://aws.amazon.com/appsync/)
+
 # Serverless chat application using ApiGateway Websockets
 This project lets you provision a ready-to-use fully serverless real-time chat application using Amazon ApiGateway Websockets. The infrastructure code is using the [AWS Cloud Development Kit(AWS CDK)](https://aws.amazon.com/cdk/) and implemented in both Typescript and NET8. The frontend is written using [Angular 17](https://angular.io/).
 
